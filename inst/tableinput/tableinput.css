@@ -1,0 +1,9 @@
+.tableinput-buttons {
+  display: inline-block;
+  margin-left: 6px;
+}
+.tableinput td div {
+  min-width: 60px;
+  min-height: 1em;
+  box-sizing: border-box;
+}
