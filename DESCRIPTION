@@ -25,3 +25,4 @@ URL: https://github.com/rstudio/shiny-incubator
 BugReports: https://github.com/rstudio/shiny-incubator/issues
 Collate:
     'tableinput.R'
+    'actionbutton.R'
