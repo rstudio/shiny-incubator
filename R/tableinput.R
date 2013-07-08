@@ -1,3 +1,6 @@
+#' @import shiny
+NULL
+
 #' Matrix input
 #' 
 #' Creates an adjustable-length matrix input.
