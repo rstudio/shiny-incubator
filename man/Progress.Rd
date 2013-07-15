@@ -36,7 +36,7 @@
 \details{
   This package exposes two distinct programming APIs for
   working with progress. \code{\link{withProgress}} and
-  \code{\code{setProgress}} together provide a simple
+  \code{\link{setProgress}} together provide a simple
   function-based interface, while the \code{Progress}
   reference class provides an object-oriented API.
 
