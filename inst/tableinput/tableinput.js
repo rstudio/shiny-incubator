@@ -293,7 +293,7 @@ jQuery(function($) {
   var tableInputBinding = new Shiny.InputBinding();
   $.extend(tableInputBinding, {
     find: function(scope) {
-      return scope.find('table.tableinput');
+      return $(scope).find('table.tableinput');
     },
     getValue: function(el) {
       var data = [];
