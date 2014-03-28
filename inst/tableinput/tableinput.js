@@ -319,7 +319,7 @@ jQuery(function($) {
     setValue: function(el) {
     },
     getType: function(el) {
-      return "matrix";
+      return "shiny.matrix";
     },
     subscribe: function(el, callback) {
       $(el).on('change.tableinput', function(e) { callback(); });
