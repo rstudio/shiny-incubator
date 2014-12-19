@@ -1,7 +1,7 @@
 Package: shinyIncubator
 Type: Package
 Title: Unofficial add-ons for Shiny
-Version: 0.2.1
+Version: 0.2.2
 Date: 2012-09-19
 Author: RStudio, Inc.
 Maintainer: Joe Cheng <joe@rstudio.org>
