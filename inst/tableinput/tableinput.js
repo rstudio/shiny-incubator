@@ -18,11 +18,12 @@ jQuery(function($) {
   var integerTableValidator = new TableInputValidator();
   $.extend(integerTableValidator, {
     onkeypress: function(el, config, key) {
-      return key >= 48 && key <= 57; // 0-9
+      return (key >= 48 && key <= 57) || // 0-9
+        key === 45;                      // -
     },
     oninput: function(el, config, evt) {
       var value = el.text();
-      var num = value.replace(/[^0-9]/g, '');
+      var num = value.replace(/[^\-0-9]/g, '');
       if (value != num) {
         el.text(num);
       }
@@ -44,12 +45,13 @@ jQuery(function($) {
   $.extend(numericTableValidator, {
     onkeypress: function(el, config, key) {
       return (key >= 48 && key <= 57) ||  // 0-9
-         key == 46 ||                     // period
-         key == 44;                       // comma
+         key === 46 ||                    // period
+         key === 44 ||                    // comma
+         key === 45;                      // hyphen
     },
     oninput: function(el, config, evt) {
       var value = el.text();
-      if (/^[0-9]*([\.,][0-9]*)?$/.test(value))
+      if (/^\-?[0-9]*([\.,][0-9]*)?$/.test(value))
         return;
 
       var floatVal = parseFloat(el.text());
@@ -70,7 +72,7 @@ jQuery(function($) {
       return parseFloat(el.text());
     }
   });
-  
+
   function moveFocus(el, voffset, hoffset) {
     var cell = el.parents('td');
     if (!cell)
@@ -78,17 +80,17 @@ jQuery(function($) {
     var row = cell.parents('tr');
     if (!row)
       return;
-    
+
     var cells = cell.parent().children('td');
     var cellIndex = cells.index(cell);
     var rows = row.parent().children('tr');
     var rowIndex = rows.index(row);
-    
+
     cellIndex += hoffset;
     cellIndex = Math.max(0, Math.min(cells.length-1, cellIndex));
     rowIndex += voffset;
     rowIndex = Math.max(0, Math.min(rows.length-1, rowIndex));
-    
+
     try {
       var newCell = $($(rows.get(rowIndex)).children('td').get(cellIndex));
       var newEl = newCell.find('div').first();
@@ -123,7 +125,7 @@ jQuery(function($) {
         $(evt.target).blur();
         return;
     }
-    
+
     if (voffset || hoffset) {
       $(evt.target).trigger('blur');
       moveFocus($(evt.target), voffset, hoffset);
@@ -150,9 +152,9 @@ jQuery(function($) {
     var el = $(evt.target);
     el.data('oldValue', getValidator(el).parseInput(el));
   });
-  
+
   $(document).on('click', '.tableinput-settings', function(evt) {
-    var el = $(evt.target);    
+    var el = $(evt.target);
     var editor = el.parents('.tableinput-container').children('.tableinput-editor');
     var tbody = el.parents('.tableinput-container').find('.tableinput>tbody');
     var rowcount = editor.find('.tableinput-rowcount');
@@ -161,18 +163,18 @@ jQuery(function($) {
     colcount.val(tbody.children().size() == 0 ? '' : tbody.children().first().children().size());
     editor.modal({});
   });
-  
+
   $(document).on('click', '.btn.tableinput-edit', function(evt) {
     var el = $(evt.target);
     var container = el.parents('.tableinput-container');
     var tbody = container.children('.tableinput').children('tbody');
     var editor = container.children('.tableinput-editor');
-    
+
     var rows = editor.find('.tableinput-rowcount');
     var cols = editor.find('.tableinput-colcount');
     var rowVal = parseInt(rows.val(), 10);
     var colVal = parseInt(cols.val(), 10);
-    
+
     if (isNaN(rowVal) || rowVal <= 0) {
       rows.get(0).focus();
       rows.get(0).select();
@@ -183,35 +185,35 @@ jQuery(function($) {
       cols.get(0).select();
       return;
     }
-    
+
     editor.modal('hide');
-    
+
     resize(tbody, rowVal, colVal);
   });
-  
+
   $(document).on('click', '.tableinput-plusrow', function(evt) {
     evt.preventDefault();
     var el = $(evt.target);
     var tbody = el.parents('.tableinput-container').find('.tableinput>tbody');
     resize(tbody, tbody.children().size() + 1, null);
   });
-  
+
   $(document).on('click', '.tableinput-minusrow', function(evt) {
     evt.preventDefault();
     var el = $(evt.target);
     var tbody = el.parents('.tableinput-container').find('.tableinput>tbody');
     resize(tbody, Math.max(1, tbody.children().size() - 1), null);
   });
-  
+
   function resize(tbody, rowVal, colVal) {
     var template = '<td><div tabindex="0"></div></td>';
-    
+
     var origRows = tbody.children().size();
     var origCols = origRows == 0 ? 0 : tbody.children().first().children().size();
-    
+
     if (colVal === null)
       colVal = origCols;
-    
+
     if (rowVal < origRows) {
       tbody.children().slice(rowVal).remove();
     } else if (rowVal > origRows) {
@@ -223,7 +225,7 @@ jQuery(function($) {
         tbody.append(tr);
       }
     }
-    
+
     if (colVal != origCols && origRows != 0) {
       var rowsToModify = tbody.children().slice(0, origRows);
       if (colVal > origCols) {
@@ -236,14 +238,14 @@ jQuery(function($) {
         });
       }
     }
-    
+
     tbody.parent().change();
   }
-  
+
   function getConfig(el, idx) {
     if (el.data('config'))
       return el.data('config').data();
-    
+
     if (typeof(idx) == 'undefined') {
       idx = el.data('index');
       if (typeof(idx) != 'number') {
@@ -252,16 +254,16 @@ jQuery(function($) {
         el.data('index', idx);
       }
     }
-    
+
     var col = $(el.parents('table').find('colgroup').children().get(idx));
     el.data('config', col);
     return col.data();
   }
-  
+
   function getValidator(el, idx) {
     if (el.data('validator'))
       return el.data('validator');
-      
+
     var config = getConfig(el, idx);
     var type = config.type || 'string';
 
@@ -272,10 +274,10 @@ jQuery(function($) {
       validator = numericTableValidator;
 
     el.data('validator', validator);
-    
+
     return validator;
   }
-  
+
   $(document).on('blur', '.tableinput td>div', function(evt) {
     evt.target.contentEditable = "false";
 
@@ -289,7 +291,7 @@ jQuery(function($) {
     if (oldValue !== newValue)
       el.change();
   });
-  
+
   var tableInputBinding = new Shiny.InputBinding();
   $.extend(tableInputBinding, {
     find: function(scope) {
@@ -310,7 +312,7 @@ jQuery(function($) {
           });
         }
       });
-      
+
       if (data.length > 0 && data[0].length != data[data.length-1].length) {
         throw "Error retrieving data from table--data was not rectangular";
       }
