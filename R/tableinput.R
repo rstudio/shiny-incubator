@@ -35,10 +35,10 @@ matrixInput <- function(inputId, label, data) {
           class = 'tableinput-buttons',
           tags$button(
             type = 'button', class = 'btn btn-mini tableinput-settings hide',
-            tags$i(class = 'icon-cog')
+            tags$i(class = 'glyphicon glyphicon-cog icon-cog')
           ),
-          HTML('<a href="#" class="tableinput-plusrow"><i class="icon-plus-sign"></i></a>'),
-          HTML('<a href="#" class="tableinput-minusrow"><i class="icon-minus-sign"></i></a>')
+          HTML('<a href="#" class="tableinput-plusrow"><i class="glyphicon glyphicon-plus-sign icon-plus-sign"></i></a>'),
+          HTML('<a href="#" class="tableinput-minusrow"><i class="glyphicon glyphicon-minus-sign icon-minus-sign"></i></a>')
         )
       ),
       tags$table(
