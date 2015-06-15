@@ -12,6 +12,7 @@ Depends:
     R (>= 2.14.1)
 Imports:
     methods,
-    shiny (>= 0.9.0)
+    shiny (>= 0.11.0),
+    htmltools
 URL: https://github.com/rstudio/shiny-incubator
 BugReports: https://github.com/rstudio/shiny-incubator/issues
