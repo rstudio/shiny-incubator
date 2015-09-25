@@ -6,5 +6,5 @@ Examples and ideas that don't belong in the core Shiny package and aren't offici
 To install, install the `devtools` package if necessary (`install.packages("devtools")`) and run:
 
 ```
-devtools::install_github("shiny-incubator", "rstudio")
+devtools::install_github("rstudio/shiny-incubator")
 ```
