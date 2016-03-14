@@ -10,7 +10,8 @@
 #' @export
 durationInput <- function(inputId, label, value = list(hour = 0, min = 0, sec = 0), step = NULL, width="50px") {
   style = ifelse(!is.null(width), paste0("width: ", shiny::validateCssUnit(width), ";"), '')
-  dinput = shiny::tags$div(
+  
+  input = shiny::tags$div(
     id = inputId, 
     class = "shiny-input-duration form-group shiny-input-container",
     shiny::tags$label(label, `for` = inputId),
@@ -28,15 +29,6 @@ durationInput <- function(inputId, label, value = list(hour = 0, min = 0, sec = 
   )
 
   shiny::tagList(
-    #shiny::singleton(
-    #  shiny::tags$header(
-        #shiny::tags$script(src = "duration-input-bindings.js")
-        #shiny::tags$script(src = system.file('durationinput/duration-input-bindings.js', package='shinyIncubator'))
-        #shiny::tags$script(src = "")
-
-        #)
-    #  )
-    #),
-    htmltools::attachDependencies(dinput, depend)
+    htmltools::attachDependencies(input, depend)
   )
 }
