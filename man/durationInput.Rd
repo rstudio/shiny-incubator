@@ -4,7 +4,7 @@
 \alias{durationInput}
 \title{Duration Input}
 \usage{
-durationInput(inputId, label, value = list(hour = 0, min = 0, sec = 0),
+durationInput(inputId, label, value = list(hour = 0, minute = 0, second = 0),
   step = NULL, width = "50px")
 }
 \arguments{
@@ -12,11 +12,12 @@ durationInput(inputId, label, value = list(hour = 0, min = 0, sec = 0),
 
 \item{label}{Display label for the control, or \code{NULL} for no label.}
 
-\item{value}{list of initial values.}
+\item{value}{Initial value as number of seconds or a list of values for hour, minute, second}
 
 \item{width}{CSS width property}
 }
 \description{
 Creates a set of linked numeric inputs that represent hour, minute and seconds
+Returns duration in seconds.
 }
 

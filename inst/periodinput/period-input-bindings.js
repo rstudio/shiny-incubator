@@ -1,8 +1,8 @@
-// custom input binding for duration
-var durationInputBinding = new Shiny.InputBinding();
-$.extend(durationInputBinding, {
+// custom input binding for time periods
+var periodInputBinding = new Shiny.InputBinding();
+$.extend(periodInputBinding, {
   find: function(scope) {
-    return $(scope).find('.shiny-input-duration');
+    return $(scope).find('.shiny-input-period');
   },
 
   getId: function(el) {
@@ -10,9 +10,11 @@ $.extend(durationInputBinding, {
   },
 
   getValue: function(el) {
-    return 3600 * parseInt($(el).find('.hour').val()) + 
-    60 * parseInt($(el).find('.minute').val()) + 
-    parseInt($(el).find('.second').val());
+    return {
+      hour: parseInt($(el).find('.hour').val()),
+      minute: parseInt($(el).find('.minute').val()),
+      second: parseInt($(el).find('.second').val())
+    };
   },
 
   setValue: function(el, value) {
@@ -27,7 +29,7 @@ $.extend(durationInputBinding, {
   },
 
   subscribe: function(el, callback) {
-    $(el).on('change.durationInputBinding', function(event) {
+    $(el).on('change.periodInputBinding', function(event) {
       var hour = $(el).find('.hour');
       var min = $(el).find('.minute');
       var sec = $(el).find('.second');
@@ -53,7 +55,7 @@ $.extend(durationInputBinding, {
   },
 
   unsubscribe: function(el) {
-    $(el).off('.durationInputBinding');
+    $(el).off('.periodInputBinding');
   }
 });
-Shiny.inputBindings.register(durationInputBinding, 'shiny.durationInput');
+Shiny.inputBindings.register(periodInputBinding, 'shiny.periodInput');

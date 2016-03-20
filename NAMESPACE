@@ -3,4 +3,5 @@
 export(commandInput)
 export(durationInput)
 export(matrixInput)
+export(periodInput)
 import(shiny)
