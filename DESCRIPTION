@@ -16,3 +16,4 @@ Imports:
     htmltools
 URL: https://github.com/rstudio/shiny-incubator
 BugReports: https://github.com/rstudio/shiny-incubator/issues
+RoxygenNote: 5.0.1
